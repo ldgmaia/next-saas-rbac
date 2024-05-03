@@ -39,7 +39,7 @@ async function seed() {
   await prisma.organization.create({
     data: {
       name: 'Acme (Admin)',
-      domain: 'Acme.com',
+      domain: 'acme.com',
       slug: 'acme-admin',
       avatarUrl: faker.image.avatarGitHub(),
       shouldAttachUserByDomain: true,
