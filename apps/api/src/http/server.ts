@@ -13,6 +13,7 @@ import {
 
 import { authenticateWithPassword } from './routes/auth/authenticate-with-password'
 import { createAccount } from './routes/auth/create-account'
+import { getProfile } from './routes/auth/get-profile'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -26,7 +27,17 @@ app.register(fastifySwagger, {
       description: 'RBAC backend service',
       version: '1.0.0',
     },
+
     servers: [],
+    components: {
+      securitySchemes: {
+        apiKey: {
+          type: 'apiKey',
+          name: 'Authorization',
+          in: 'header',
+        },
+      },
+    },
   },
   transform: jsonSchemaTransform,
 })
@@ -36,13 +47,14 @@ app.register(fastifySwaggerUI, {
 })
 
 app.register(fastifyJwt, {
-  secret: 'my-screte',
+  secret: 'my-secret',
 })
 
 app.register(fastifyCors)
 
 app.register(createAccount)
 app.register(authenticateWithPassword)
+app.register(getProfile)
 
 app.listen({ port: 3333 }).then(() => {
   console.log('Running on port 3333')
