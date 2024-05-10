@@ -11,6 +11,7 @@ import {
   validatorCompiler,
 } from 'fastify-type-provider-zod'
 
+import { env } from '@saas/env'
 import { errorHandler } from './error-handler'
 import { authenticateWithGithub } from './routes/auth/authenticate-with-github'
 import { authenticateWithPassword } from './routes/auth/authenticate-with-password'
@@ -32,8 +33,6 @@ app.register(fastifySwagger, {
       description: 'RBAC backend service',
       version: '1.0.0',
     },
-
-    servers: [],
     components: {
       securitySchemes: {
         apiKey: {
@@ -52,7 +51,7 @@ app.register(fastifySwaggerUI, {
 })
 
 app.register(fastifyJwt, {
-  secret: 'my-secret',
+  secret: env.JWT_SECRET,
 })
 
 app.register(fastifyCors)
@@ -64,6 +63,6 @@ app.register(requestPasswordRecover)
 app.register(resetPassword)
 app.register(authenticateWithGithub)
 
-app.listen({ port: 3333 }).then(() => {
+app.listen({ port: env.SERVER_PORT }).then(() => {
   console.log('Running on port 3333')
 })
