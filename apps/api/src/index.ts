@@ -1,7 +1,8 @@
 import { defineAbilityFor, projectSchema } from '@saas/auth'
 
 const ability = defineAbilityFor({
-  role: ['MEMBER', 'BILLING'],
+  role: 'MEMBER',
+  // role: ['MEMBER', 'BILLING'],
   id: 'user-id',
   __typename: 'User',
 })

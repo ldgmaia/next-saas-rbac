@@ -32,22 +32,59 @@ type AppAbilities = z.infer<typeof appAbilitiesSchema>
 export type AppAbility = MongoAbility<AppAbilities>
 export const createAppAbility = createMongoAbility as CreateAbility<AppAbility>
 
+// export function defineAbilityFor(user: User) {
+//   const builder = new AbilityBuilder(createAppAbility)
+
+//   const build = (role: Role) => {
+//     if (typeof permissions[role] !== 'function') {
+//       throw new Error(`Permissions for role ${role} not found`)
+//     }
+//     return permissions[role](user, builder)
+//   }
+
+//   if (typeof user.role === 'string') {
+//     build(user.role)
+//   }
+
+//   if (Array.isArray(user.role)) {
+//     for (const role of user.role) {
+//       build(role)
+//     }
+//   }
+
+//   const ability = builder.build({
+//     detectSubjectType(subject) {
+//       return subject.__typename
+//     },
+//   })
+
+//   return ability
+// }
+
 export function defineAbilityFor(user: User) {
   const builder = new AbilityBuilder(createAppAbility)
 
-  for (const role of user.role) {
-    // Check if there's a corresponding permission defined for the role
-    if (typeof permissions[role] !== 'function') {
-      throw new Error(`Permissions for role ${role} not found`)
-    }
-    permissions[role](user, builder)
+  if (typeof permissions[user.role] !== 'function') {
+    throw new Error(`Permissions for role ${user.role} not found.`)
   }
+  permissions[user.role](user, builder)
+
+  // for (const role of user.role) {
+  //   // Check if there's a corresponding permission defined for the role
+  //   if (typeof permissions[role] !== 'function') {
+  //     throw new Error(`Permissions for role ${role} not found`)
+  //   }
+  //   permissions[role](user, builder)
+  // }
 
   const ability = builder.build({
     detectSubjectType(subject) {
       return subject.__typename
     },
   })
+
+  ability.can = ability.can.bind(ability)
+  ability.cannot = ability.cannot.bind(ability)
 
   return ability
 }
