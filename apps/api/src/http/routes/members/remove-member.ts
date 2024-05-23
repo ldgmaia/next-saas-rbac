@@ -1,29 +1,25 @@
 import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
 import { getUserPermissions } from '@/utils/get-user-permissions'
-import { roleSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { UnauthorizedError } from '../_errors/unauthorized-error'
 
-export async function updateMembers(app: FastifyInstance) {
+export async function removeMember(app: FastifyInstance) {
   app
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)
-    .put(
+    .delete(
       '/organizations/:slug/members/:memberId',
       {
         schema: {
           tags: ['Members'],
-          summary: 'Update member details',
+          summary: 'remove a member from organization',
           security: [{ apiKey: [] }],
           params: z.object({
             slug: z.string(),
             memberId: z.string().uuid(),
-          }),
-          body: z.object({
-            role: roleSchema,
           }),
           response: {
             204: z.null(),
@@ -38,25 +34,16 @@ export async function updateMembers(app: FastifyInstance) {
 
         const { cannot } = getUserPermissions(userId, membership.role)
 
-        if (cannot('update', 'User')) {
+        if (cannot('delete', 'User')) {
           throw new UnauthorizedError(
-            'You are not allowed to update this member'
+            'You are not allowed to remove this member'
           )
         }
 
-        const { role } = request.body
-
-        console.log('role ', role)
-        console.log('memberId ', memberId)
-        console.log('organization.id ', organization.id)
-
-        await prisma.member.update({
+        await prisma.member.delete({
           where: {
             id: memberId,
             organizationId: organization.id,
-          },
-          data: {
-            role,
           },
         })
 

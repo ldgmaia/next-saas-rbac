@@ -7,13 +7,7 @@ import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import { UnauthorizedError } from '../_errors/unauthorized-error'
 
-// id: string;
-// role: $Enums.Role;
-// name: string | null;
-// avatarUrl: string | null;
-// email: string;
-
-export async function getMembers(app: FastifyInstance) {
+export async function getMember(app: FastifyInstance) {
   app
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)
