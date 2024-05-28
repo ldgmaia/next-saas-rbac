@@ -11,7 +11,7 @@ export async function createAccount(app: FastifyInstance) {
     '/users',
     {
       schema: {
-        tags: ['auth'],
+        tags: ['Authentication'],
         summary: 'Create an account',
         body: z.object({
           name: z.string(),
