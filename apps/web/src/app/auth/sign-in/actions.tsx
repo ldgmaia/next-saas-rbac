@@ -11,7 +11,7 @@ const signInSchema = z.object({
 })
 
 export async function signInWithEmailAndPassword(
-  _previousState: unknown,
+  // _previousState: unknown,
   data: FormData
 ) {
   const result = signInSchema.safeParse(Object.fromEntries(data))

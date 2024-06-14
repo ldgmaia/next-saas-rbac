@@ -5,6 +5,7 @@ module.exports = {
   plugins: ['simple-import-sort'],
   rules: {
     'react/react-in-jsx-scope': 'off',
+    'simple-import-sort/imports': 'error',
     'react/self-closing-comp': [
       'error',
       {
@@ -12,7 +13,6 @@ module.exports = {
         html: true,
       },
     ],
-    'simple-import-sort/imports': 'error',
     'prettier/prettier': [
       'error',
       {
