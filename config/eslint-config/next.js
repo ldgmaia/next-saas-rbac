@@ -5,6 +5,10 @@ module.exports = {
   plugins: ['simple-import-sort'],
   rules: {
     'react/react-in-jsx-scope': 'off',
+    'react/prop-types': [
+      2,
+      { ignore: ['className', 'orientation', 'decorative'] },
+    ], // needed because of shadcn ui empty className
     'simple-import-sort/imports': 'error',
     'react/self-closing-comp': [
       'error',
