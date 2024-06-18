@@ -9,7 +9,7 @@ interface SignInWithPasswordResponse {
   token: string
 }
 
-export async function SignInWithPassword({
+export async function signInWithPassword({
   email,
   password,
 }: SignInWithPasswordRequest) {

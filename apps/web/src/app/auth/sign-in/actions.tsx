@@ -4,7 +4,7 @@ import { HTTPError } from 'ky'
 import { cookies } from 'next/headers'
 import { z } from 'zod'
 
-import { SignInWithPassword } from '@/http/sign-in-with-password'
+import { signInWithPassword } from '@/http/sign-in-with-password'
 
 const signInSchema = z.object({
   email: z.string().email('Invalid e-mail address'),
@@ -27,7 +27,7 @@ export async function signInWithEmailAndPassword(
   // await new Promise((resolve) => setTimeout(resolve, 2000))
 
   try {
-    const { token } = await SignInWithPassword({
+    const { token } = await signInWithPassword({
       email,
       password,
     })
