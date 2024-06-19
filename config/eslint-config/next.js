@@ -7,7 +7,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': [
       2,
-      { ignore: ['className', 'orientation', 'decorative'] },
+      { ignore: ['className', 'orientation', 'decorative', 'sideOffset', 'checked'] },
     ], // needed because of shadcn ui empty className
     'simple-import-sort/imports': 'error',
     'react/self-closing-comp': [
