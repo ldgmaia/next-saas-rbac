@@ -5,7 +5,8 @@
     "dev": "npm run env:load tsx watch src/http/server.ts",
     "db:migrate": "npm run env:load prisma migrate dev",
     "db:studio": "npm run env:load prisma studio",
-    "env:load": "dotenv -e ../../.env --"
+    "env:load": "dotenv -e ../../.env --",
+    "db:seed": "npm run env:load prisma db seed"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",

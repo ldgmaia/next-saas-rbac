@@ -1,5 +1,6 @@
 import type { FastifyInstance } from 'fastify/types/instance'
 import { ZodError } from 'zod'
+
 import { BadRequestError } from './routes/_errors/bad-request-error'
 import { UnauthorizedError } from './routes/_errors/unauthorized-error'
 
@@ -27,7 +28,7 @@ export const errorHandler: FastifyErrorHandler = (error, request, reply) => {
 
   console.log(error)
 
-  //send error to some observability platform
+  // send error to some observability platform
 
   return reply.status(500).send({
     message: 'Internal server error',
