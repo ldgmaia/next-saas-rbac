@@ -1,8 +1,6 @@
 import { AbilityBuilder } from '@casl/ability'
-
-import { AppAbility } from './index.js'
-import { User } from './models/user.js'
-import { Role } from './roles.js'
+import type { User } from './models/user'
+import type { AppAbility, Role } from '.'
 
 type PermissionsByRole = (
   user: User,

@@ -1,9 +1,10 @@
-import { prisma } from '@/lib/prisma'
 import { hash } from 'bcryptjs'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-
 import { z } from 'zod'
+
+import { prisma } from '@/lib/prisma'
+
 import { BadRequestError } from '../_errors/bad-request-error'
 
 export async function createAccount(app: FastifyInstance) {
@@ -36,7 +37,7 @@ export async function createAccount(app: FastifyInstance) {
       const autoJoinOrganization = await prisma.organization.findFirst({
         where: {
           domain,
-          shouldAttachUserByDomain: true,
+          shouldAttachUsersByDomain: true,
         },
       })
 
@@ -47,7 +48,7 @@ export async function createAccount(app: FastifyInstance) {
           name,
           email,
           passwordHash,
-          members_on: autoJoinOrganization
+          member_on: autoJoinOrganization
             ? {
                 create: {
                   organizationId: autoJoinOrganization.id,

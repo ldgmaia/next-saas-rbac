@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { organizationSchema } from '../models/organization.js'
+import { organizationSchema } from '../models/organization'
 
 export const organizationSubject = z.tuple([
   z.union([

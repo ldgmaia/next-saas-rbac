@@ -5,18 +5,19 @@ import {
   createMongoAbility,
 } from '@casl/ability'
 import { z } from 'zod'
-import { User } from './models/user.js'
-import { permissions } from './permissions.js'
-import { billingSubject } from './subjects/billing.js'
-import { inviteSubject } from './subjects/invite.js'
-import { organizationSubject } from './subjects/organization.js'
-import { projectSubject } from './subjects/project.js'
-import { userSubject } from './subjects/user.js'
 
-export * from './models/organization.js'
-export * from './models/project.js'
-export * from './models/user.js'
-export * from './roles.js'
+import { User } from './models/user'
+import { permissions } from './permissions'
+import { billingSubject } from './subjects/billing'
+import { inviteSubject } from './subjects/invite'
+import { organizationSubject } from './subjects/organization'
+import { projectSubject } from './subjects/project'
+import { userSubject } from './subjects/user'
+
+export * from './models/organization'
+export * from './models/project'
+export * from './models/user'
+export * from './roles'
 
 const appAbilitiesSchema = z.union([
   billingSubject,
@@ -67,6 +68,7 @@ export function defineAbilityFor(user: User) {
   if (typeof permissions[user.role] !== 'function') {
     throw new Error(`Permissions for role ${user.role} not found.`)
   }
+
   permissions[user.role](user, builder)
 
   // for (const role of user.role) {

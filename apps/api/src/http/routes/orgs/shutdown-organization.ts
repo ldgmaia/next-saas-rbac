@@ -1,11 +1,12 @@
-import { auth } from '@/http/middlewares/auth'
-import { prisma } from '@/lib/prisma'
-import { getUserPermissions } from '@/utils/get-user-permissions'
 import { organizationSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import { UnauthorizedError } from '../_errors/unauthorized-error'
+
+import { auth } from '@/http/middlewares/auth'
+import { UnauthorizedError } from '@/http/routes/_errors/unauthorized-error'
+import { prisma } from '@/lib/prisma'
+import { getUserPermissions } from '@/utils/get-user-permissions'
 
 export async function shutdownOrganization(app: FastifyInstance) {
   app
@@ -17,7 +18,7 @@ export async function shutdownOrganization(app: FastifyInstance) {
         schema: {
           tags: ['Organizations'],
           summary: 'Shutdown an organization',
-          security: [{ apiKey: [] }],
+          security: [{ bearerAuth: [] }],
           params: z.object({
             slug: z.string(),
           }),
@@ -27,7 +28,7 @@ export async function shutdownOrganization(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
-        const { slug } = await request.params
+        const { slug } = request.params
         const { membership, organization } =
           await request.getUserMembership(slug)
         const userId = await request.getCurrentUserId()
@@ -38,7 +39,7 @@ export async function shutdownOrganization(app: FastifyInstance) {
 
         if (cannot('delete', authOrganization)) {
           throw new UnauthorizedError(
-            'You are not allowed to delete this organization'
+            `You are not allowed to shutdown this organization.`
           )
         }
 

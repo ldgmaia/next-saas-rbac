@@ -2,8 +2,8 @@ import fastifyCors from '@fastify/cors'
 import fastifyJwt from '@fastify/jwt'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUI from '@fastify/swagger-ui'
+import { env } from '@saas/env'
 import fastify from 'fastify'
-
 import {
   ZodTypeProvider,
   jsonSchemaTransform,
@@ -11,7 +11,6 @@ import {
   validatorCompiler,
 } from 'fastify-type-provider-zod'
 
-import { env } from '@saas/env'
 import { errorHandler } from './error-handler'
 import { authenticateWithGithub } from './routes/auth/authenticate-with-github'
 import { authenticateWithPassword } from './routes/auth/authenticate-with-password'
@@ -27,7 +26,7 @@ import { getInvites } from './routes/invites/get-invites'
 import { getPendingInvites } from './routes/invites/get-pending-invites'
 import { rejectInvite } from './routes/invites/reject-invite'
 import { revokeInvite } from './routes/invites/revoke-invite'
-import { getMember } from './routes/members/get-member'
+import { getMembers } from './routes/members/get-members'
 import { removeMember } from './routes/members/remove-member'
 import { updateMembers } from './routes/members/update-member'
 import { createOrganization } from './routes/orgs/create-organization'
@@ -100,7 +99,7 @@ app.register(getProject)
 app.register(getProjects)
 app.register(updateProject)
 
-app.register(getMember)
+app.register(getMembers)
 app.register(updateMembers)
 app.register(removeMember)
 

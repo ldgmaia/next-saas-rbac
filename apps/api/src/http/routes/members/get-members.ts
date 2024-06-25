@@ -1,13 +1,14 @@
-import { auth } from '@/http/middlewares/auth'
-import { prisma } from '@/lib/prisma'
-import { getUserPermissions } from '@/utils/get-user-permissions'
 import { roleSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
-import { UnauthorizedError } from '../_errors/unauthorized-error'
 
-export async function getMember(app: FastifyInstance) {
+import { auth } from '@/http/middlewares/auth'
+import { UnauthorizedError } from '@/http/routes/_errors/unauthorized-error'
+import { prisma } from '@/lib/prisma'
+import { getUserPermissions } from '@/utils/get-user-permissions'
+
+export async function getMembers(app: FastifyInstance) {
   app
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)
@@ -16,8 +17,8 @@ export async function getMember(app: FastifyInstance) {
       {
         schema: {
           tags: ['Members'],
-          summary: 'Get organization members',
-          security: [{ apiKey: [] }],
+          summary: 'Get all organization members',
+          security: [{ bearerAuth: [] }],
           params: z.object({
             slug: z.string(),
           }),
@@ -25,13 +26,13 @@ export async function getMember(app: FastifyInstance) {
             200: z.object({
               members: z.array(
                 z.object({
-                  userId: z.string().uuid(),
                   id: z.string().uuid(),
+                  userId: z.string().uuid(),
                   role: roleSchema,
                   name: z.string().nullable(),
                   email: z.string().email(),
                   avatarUrl: z.string().url().nullable(),
-                })
+                }),
               ),
             }),
           },
@@ -47,7 +48,7 @@ export async function getMember(app: FastifyInstance) {
 
         if (cannot('get', 'User')) {
           throw new UnauthorizedError(
-            'You are not allowed to see organization members'
+            `You're not allowed to see organization members.`,
           )
         }
 
@@ -72,17 +73,17 @@ export async function getMember(app: FastifyInstance) {
           },
         })
 
-        const membersWithRole = members.map(
+        const membersWithRoles = members.map(
           ({ user: { id: userId, ...user }, ...member }) => {
             return {
               ...user,
               ...member,
               userId,
             }
-          }
+          },
         )
 
-        return reply.send({ members: membersWithRole })
-      }
+        return reply.send({ members: membersWithRoles })
+      },
     )
 }
