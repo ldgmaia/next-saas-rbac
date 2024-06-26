@@ -1,10 +1,12 @@
-import { auth } from '@/http/middlewares/auth'
-import { prisma } from '@/lib/prisma'
-import { getUserPermissions } from '@/utils/get-user-permissions'
 import { organizationSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
+
+import { auth } from '@/http/middlewares/auth'
+import { prisma } from '@/lib/prisma'
+import { getUserPermissions } from '@/utils/get-user-permissions'
+
 import { BadRequestError } from '../_errors/bad-request-error'
 import { UnauthorizedError } from '../_errors/unauthorized-error'
 
@@ -22,7 +24,7 @@ export async function updateOrganization(app: FastifyInstance) {
           body: z.object({
             name: z.string(),
             domain: z.string().nullish(),
-            shouldAttachUserByDomain: z.boolean().optional(),
+            shouldAttachUsersByDomain: z.boolean().optional(),
           }),
           params: z.object({
             slug: z.string(),
@@ -38,7 +40,7 @@ export async function updateOrganization(app: FastifyInstance) {
           await request.getUserMembership(slug)
         const userId = await request.getCurrentUserId()
 
-        const { name, domain, shouldAttachUserByDomain } = request.body
+        const { name, domain, shouldAttachUsersByDomain } = request.body
 
         const authOrganization = organizationSchema.parse(organization)
 
@@ -83,7 +85,7 @@ export async function updateOrganization(app: FastifyInstance) {
             name,
             // slug: createSlug(name),
             domain,
-            shouldAttachUserByDomain,
+            shouldAttachUsersByDomain,
             // ownerId: userId,
             // members: {
             //   create: {

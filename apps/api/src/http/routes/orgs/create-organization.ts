@@ -1,9 +1,11 @@
-import { auth } from '@/http/middlewares/auth'
-import { prisma } from '@/lib/prisma'
-import { createSlug } from '@/utils/create-slug'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
+
+import { auth } from '@/http/middlewares/auth'
+import { prisma } from '@/lib/prisma'
+import { createSlug } from '@/utils/create-slug'
+
 import { BadRequestError } from '../_errors/bad-request-error'
 
 export async function createOrganization(app: FastifyInstance) {
@@ -19,8 +21,11 @@ export async function createOrganization(app: FastifyInstance) {
           security: [{ apiKey: [] }],
           body: z.object({
             name: z.string(),
-            domain: z.string().nullish(),
-            shouldAttachUserByDomain: z.boolean().optional(),
+            domain: z
+              .string()
+              .nullish()
+              .transform((value) => (value === '' ? null : value)),
+            shouldAttachUsersByDomain: z.boolean().optional(),
           }),
           response: {
             201: z.object({
@@ -34,7 +39,7 @@ export async function createOrganization(app: FastifyInstance) {
       },
       async (request, reply) => {
         const userId = await request.getCurrentUserId()
-        const { name, domain, shouldAttachUserByDomain } = request.body
+        const { name, domain, shouldAttachUsersByDomain } = request.body
 
         if (domain) {
           const organizationByDomain = await prisma.organization.findUnique({
@@ -61,7 +66,7 @@ export async function createOrganization(app: FastifyInstance) {
             name,
             slug: createSlug(name),
             domain,
-            shouldAttachUserByDomain,
+            shouldAttachUsersByDomain,
             ownerId: userId,
             members: {
               create: {
