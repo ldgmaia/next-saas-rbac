@@ -1,14 +1,12 @@
-version: '3.8'
-
 services:
   mysql:
     volumes:
       - ~/Documents/projects/volumes/mysql-saas:/var/lib/mysql
-    image: mysql
+    image: mysql:8.0
     container_name: mysql-saas
-    command: --default-authentication-plugin=mysql_native_password
+    command: --default-authentication-plugin=caching_sha2_password
     restart: unless-stopped
     env_file:
       - ./.env
     ports:
-      - 3307:3306
+      - 3310:3306
