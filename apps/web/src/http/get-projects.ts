@@ -1,7 +1,7 @@
 import { api } from './api-client'
 
 interface GetProjectsResponse {
-  projectss: {
+  projects: {
     name: string
     id: string
     slug: string
