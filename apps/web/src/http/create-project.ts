@@ -1,23 +1,22 @@
 import { api } from './api-client'
 
 interface CreateProjectRequest {
+  org: string
   name: string
-  domain: string | null
-  shouldAttachUsersByDomain: boolean
+  description: string
 }
 
 type CreateProjectResponse = void
 
 export async function createProject({
+  org,
   name,
-  domain,
-  shouldAttachUsersByDomain,
+  description,
 }: CreateProjectRequest): Promise<CreateProjectResponse> {
-  await api.post('projects', {
+  await api.post(`organizations/${org}/projects`, {
     json: {
       name,
-      domain,
-      shouldAttachUsersByDomain,
+      description,
     },
   })
 }

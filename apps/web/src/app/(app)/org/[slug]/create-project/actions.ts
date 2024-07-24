@@ -3,6 +3,7 @@
 import { HTTPError } from 'ky'
 import { z } from 'zod'
 
+import { getCurrentOrganization } from '@/auth/auth'
 import { createProject } from '@/http/create-project'
 
 const projectSchema = z.object({
@@ -27,6 +28,7 @@ export async function createProjectAction(
 
   try {
     await createProject({
+      org: getCurrentOrganization()!,
       name,
       description,
     })
@@ -44,7 +46,7 @@ export async function createProjectAction(
 
   return {
     success: true,
-    message: 'Successfully create project',
+    message: 'Successfully created the project',
     errors: null,
   }
 }
