@@ -5,10 +5,10 @@ import fastifySwaggerUI from '@fastify/swagger-ui'
 import { env } from '@saas/env'
 import fastify from 'fastify'
 import {
-  ZodTypeProvider,
   jsonSchemaTransform,
   serializerCompiler,
   validatorCompiler,
+  ZodTypeProvider,
 } from 'fastify-type-provider-zod'
 
 import { errorHandler } from './error-handler'
