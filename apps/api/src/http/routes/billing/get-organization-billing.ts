@@ -1,9 +1,11 @@
-import { auth } from '@/http/middlewares/auth'
-import { prisma } from '@/lib/prisma'
-import { getUserPermissions } from '@/utils/get-user-permissions'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
+
+import { auth } from '@/http/middlewares/auth'
+import { prisma } from '@/lib/prisma'
+import { getUserPermissions } from '@/utils/get-user-permissions'
+
 import { BadRequestError } from '../_errors/bad-request-error'
 
 export async function getOrganizationBilling(app: FastifyInstance) {
@@ -39,7 +41,7 @@ export async function getOrganizationBilling(app: FastifyInstance) {
           },
         },
       },
-      async (request, reply) => {
+      async (request) => {
         const { slug } = request.params
 
         const userId = await request.getCurrentUserId()
