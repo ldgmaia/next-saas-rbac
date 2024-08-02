@@ -32,7 +32,7 @@ export async function getMembers(app: FastifyInstance) {
                   name: z.string().nullable(),
                   email: z.string().email(),
                   avatarUrl: z.string().url().nullable(),
-                }),
+                })
               ),
             }),
           },
@@ -48,7 +48,7 @@ export async function getMembers(app: FastifyInstance) {
 
         if (cannot('get', 'User')) {
           throw new UnauthorizedError(
-            `You're not allowed to see organization members.`,
+            `You're not allowed to see organization members.`
           )
         }
 
@@ -80,10 +80,10 @@ export async function getMembers(app: FastifyInstance) {
               ...member,
               userId,
             }
-          },
+          }
         )
 
         return reply.send({ members: membersWithRoles })
-      },
+      }
     )
 }
