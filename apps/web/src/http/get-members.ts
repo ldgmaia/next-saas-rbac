@@ -15,7 +15,11 @@ interface GetMembersResponse {
 
 export async function getMembers(organizationSlug: string) {
   const result = await api
-    .get(`organizations/${organizationSlug}/members`)
+    .get(`organizations/${organizationSlug}/members`, {
+      next: {
+        tags: [`${organizationSlug}/members`],
+      },
+    })
     .json<GetMembersResponse>()
 
   return result
