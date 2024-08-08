@@ -105,6 +105,33 @@ async function seed() {
           ],
         },
       },
+      invites: {
+        createMany: {
+          data: [
+            {
+              email: faker.internet.email(),
+              role: 'MEMBER',
+              authorId: user.id,
+              createdAt: new Date(),
+              id: faker.string.uuid(),
+            },
+            {
+              email: faker.internet.email(),
+              role: 'ADMIN',
+              authorId: user.id,
+              createdAt: new Date(),
+              id: faker.string.uuid(),
+            },
+            {
+              email: faker.internet.email(),
+              role: 'BILLING',
+              authorId: user.id,
+              createdAt: new Date(),
+              id: faker.string.uuid(),
+            },
+          ],
+        },
+      },
     },
   })
 
@@ -171,6 +198,33 @@ async function seed() {
           ],
         },
       },
+      invites: {
+        createMany: {
+          data: [
+            {
+              email: faker.internet.email(),
+              role: 'MEMBER',
+              authorId: user.id,
+              createdAt: new Date(),
+              id: faker.string.uuid(),
+            },
+            {
+              email: faker.internet.email(),
+              role: 'ADMIN',
+              authorId: user.id,
+              createdAt: new Date(),
+              id: faker.string.uuid(),
+            },
+            {
+              email: faker.internet.email(),
+              role: 'BILLING',
+              authorId: user.id,
+              createdAt: new Date(),
+              id: faker.string.uuid(),
+            },
+          ],
+        },
+      },
     },
   })
 
@@ -233,6 +287,33 @@ async function seed() {
             {
               userId: user3.id,
               role: 'MEMBER',
+            },
+          ],
+        },
+      },
+      invites: {
+        createMany: {
+          data: [
+            {
+              email: faker.internet.email(),
+              role: 'MEMBER',
+              authorId: user.id,
+              createdAt: new Date(),
+              id: faker.string.uuid(),
+            },
+            {
+              email: faker.internet.email(),
+              role: 'ADMIN',
+              authorId: user.id,
+              createdAt: new Date(),
+              id: faker.string.uuid(),
+            },
+            {
+              email: faker.internet.email(),
+              role: 'BILLING',
+              authorId: user.id,
+              createdAt: new Date(),
+              id: faker.string.uuid(),
             },
           ],
         },

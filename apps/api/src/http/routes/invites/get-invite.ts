@@ -1,8 +1,10 @@
-import { prisma } from '@/lib/prisma'
 import { roleSchema } from '@saas/auth'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { z } from 'zod'
+
+import { prisma } from '@/lib/prisma'
+
 import { BadRequestError } from '../_errors/bad-request-error'
 
 export async function getInvite(app: FastifyInstance) {
@@ -41,7 +43,7 @@ export async function getInvite(app: FastifyInstance) {
           },
         },
       },
-      async (request, reply) => {
+      async (request) => {
         const { inviteId } = request.params
 
         const invite = await prisma.invite.findUnique({
