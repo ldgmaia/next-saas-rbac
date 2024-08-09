@@ -1,6 +1,6 @@
 import { ability } from '@/auth/auth'
 
-import { Invites } from './invite'
+import { Invites } from './invites'
 import { MemberList } from './member-list'
 
 export default async function MembersPage() {
