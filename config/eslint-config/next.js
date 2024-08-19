@@ -16,6 +16,7 @@ module.exports = {
           'sideOffset',
           'checked',
           'position',
+          'align',
         ],
       },
     ], // needed because of shadcn ui empty className
