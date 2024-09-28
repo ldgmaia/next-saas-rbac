@@ -1,0 +1,11 @@
+services:
+  db:
+    container_name: postgres-saas
+    restart: unless-stopped
+    image: postgres:12.20-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ~\Documents\projects\volumes\postgres-saas:/var/lib/postgresql/data
+    env_file:
+      - ./.env
