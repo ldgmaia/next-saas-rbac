@@ -6,7 +6,9 @@
     "db:migrate": "npm run env:load prisma migrate dev",
     "db:studio": "npm run env:load prisma studio",
     "env:load": "dotenv -e ../../.env --",
-    "db:seed": "npm run env:load prisma db seed"
+    "db:seed": "npm run env:load prisma db seed",
+    "build": "tsup",
+    "start": "node dist/http/server.js"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
@@ -17,6 +19,7 @@
     "@types/node": "^20.12.7",
     "dotenv-cli": "^7.4.2",
     "prisma": "^5.17.0",
+    "tsup": "^8.3.5",
     "tsx": "^4.7.3"
   },
   "dependencies": {
