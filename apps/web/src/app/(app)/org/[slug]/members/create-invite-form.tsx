@@ -1,8 +1,8 @@
 'use client'
 
 import { AlertTriangle, Loader2, UserPlus } from 'lucide-react'
-import { useParams } from 'next/navigation'
 
+// import { useParams } from 'next/navigation'
 // import { useRouter } from 'next/navigation'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
@@ -19,7 +19,7 @@ import { useFormState } from '@/hooks/use-form-state'
 import { createInviteAction } from './actions'
 
 export function CreateInviteForm() {
-  const { slug: org } = useParams<{ slug: string }>()
+  // const { slug: org } = useParams<{ slug: string }>()
 
   const [{ success, message, errors }, handleSubmit, isPending] =
     useFormState(createInviteAction)
@@ -52,7 +52,7 @@ export function CreateInviteForm() {
         </Alert>
       )} */}
 
-      <div className="flex items-center gap-2 ">
+      <div className="flex items-center gap-2">
         <div className="flex-1 space-y-1">
           <Input
             name="email"

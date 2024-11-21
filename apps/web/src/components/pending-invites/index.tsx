@@ -4,7 +4,6 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { Check, UserPlus2, X } from 'lucide-react'
-import { userAgent } from 'next/server'
 import { useState } from 'react'
 
 import { getPendingInvites } from '@/http/get-pending-invites'
@@ -19,7 +18,7 @@ export function PendingInvites() {
   const queryClient = useQueryClient()
   const [isOpen, setIsOpen] = useState(false)
 
-  const { data, isLoading, refetch } = useQuery({
+  const { data } = useQuery({
     queryKey: ['pending-invites'],
     queryFn: getPendingInvites,
     enabled: isOpen,
